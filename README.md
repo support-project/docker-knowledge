@@ -8,7 +8,7 @@ Docker file for knowledge
 
 以下のコマンドでイメージを作成できます。
 
-    docker build -t knowledge:0.4.4 .
+    docker build -t knowledge:0.5.1 .
 
 ## Run
 
@@ -16,6 +16,6 @@ Docker file for knowledge
 
     mkdir /home/hoge/knowledge
     chmod a+w /home/hoge/knowledge
-    docker run -d -p 80:8080 -v /home/hoge/knowledge:/root/.knowledge knowledge:0.4.4
+    docker run -d -p 80:8080 -v /home/hoge/knowledge:/root/.knowledge knowledge:0.5.1
 
 コンテナの停止時には、管理メニューからDBをまず停止するようにしてください。

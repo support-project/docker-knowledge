@@ -46,7 +46,7 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
 ############################# knowledge
 
 RUN rm -rf ${CATALINA_HOME}/webapps/ROOT
-RUN wget -O ${CATALINA_HOME}/webapps/ROOT.war https://github.com/support-project/knowledge/releases/download/v0.6.0pre2/knowledge.war
+RUN wget -O ${CATALINA_HOME}/webapps/ROOT.war https://github.com/support-project/knowledge/releases/download/v0.6.1/knowledge.war
 RUN mkdir /root/.knowledge
 
 VOLUME [ "/root/.knowledge" ]

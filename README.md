@@ -16,6 +16,6 @@ Docker file for knowledge
 
     mkdir /home/hoge/knowledge
     chmod a+w /home/hoge/knowledge
-    docker run -d -p 80:8080 -v /home/hoge/knowledge:/root/.knowledge knowledge:1.0.0pre2
+    docker run -d -p 80:8080 -v /home/hoge/knowledge:/root/.knowledge knowledge:1.0.0
 
 コンテナの停止時には、管理メニューからDBをまず停止するようにしてください。

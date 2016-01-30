@@ -1,6 +1,6 @@
 # Dockerfile for Knowledge
 
-FROM ubuntu:15.04
+FROM debian:jessie-backports
 
 # ==== dumb-init ====
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.0.0/dumb-init_1.0.0_amd64 \

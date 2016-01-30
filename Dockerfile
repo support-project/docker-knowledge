@@ -14,7 +14,8 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/tomcat8/webapps/ROOT \
   && update-ca-certificates -f \
   && chmod +x /usr/local/bin/dumb-init
-COPY setenv.sh /usr/share/tomcat8/bin/
+ENV CATALINA_HOME=/usr/share/tomcat8 \
+    CATALINA_BASE=/var/lib/tomcat8
 
 # ==== add Knowledge ====
 ADD https://github.com/support-project/knowledge/releases/download/v1.0.0/knowledge.war \

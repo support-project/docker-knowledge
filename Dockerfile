@@ -1,4 +1,4 @@
-# Dockerfile for knowledge
+# Dockerfile for Knowledge
 
 FROM ubuntu:15.04
 

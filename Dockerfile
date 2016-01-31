@@ -1,16 +1,27 @@
-# Docker file for knowledge
+# Dockerfile for Knowledge
 
-FROM ubuntu:15.04
+FROM debian:jessie-backports
 
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y openjdk-8-jre-headless tomcat8 wget
-RUN rm -rf /var/lib/tomcat8/webapps/ROOT
-RUN wget -O /var/lib/tomcat8/webapps/ROOT.war https://github.com/support-project/knowledge/releases/download/v1.0.0/knowledge.war
-RUN mkdir /root/.knowledge
-RUN update-ca-certificates -f
-COPY setenv.sh /usr/share/tomcat8/bin/
+# ==== dumb-init ====
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.0.0/dumb-init_1.0.0_amd64 \
+      /usr/local/bin/dumb-init
+
+# ==== environment ====
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive \
+       apt-get install -y openjdk-8-jre-headless tomcat8 \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/tomcat8/webapps/ROOT \
+  && update-ca-certificates -f \
+  && chmod +x /usr/local/bin/dumb-init
+ENV CATALINA_HOME=/usr/share/tomcat8 \
+    CATALINA_BASE=/var/lib/tomcat8
+
+# ==== add Knowledge ====
+ADD https://github.com/support-project/knowledge/releases/download/v1.0.0/knowledge.war \
+      /var/lib/tomcat8/webapps/ROOT.war
 
 VOLUME [ "/root/.knowledge" ]
 EXPOSE 8080
 
-CMD [ "/usr/share/tomcat8/bin/catalina.sh", "run" ]
+CMD [ "/usr/local/bin/dumb-init", "/usr/share/tomcat8/bin/catalina.sh", "run" ]

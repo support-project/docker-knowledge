@@ -8,7 +8,7 @@ Docker file for knowledge
 
 以下のコマンドでイメージを作成できます。
 
-    docker build -t knowledge:1.1.0 .
+    docker build -t knowledge:1.3.1 .
 
 ## Run
 

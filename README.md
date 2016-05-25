@@ -30,11 +30,6 @@ Get DockerFile and run this command.
 
 ```
 docker build -t knowledge .
-```
-
-## Run
-
-```
 mkdir ~/home/hoge/knowledge
 chmod a+w /home/hoge/knowledge
 docker run -d -p 80:8080 -v /home/hoge/knowledge:/root/.knowledge --name knowledge knowledge

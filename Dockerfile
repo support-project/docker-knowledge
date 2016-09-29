@@ -2,7 +2,7 @@
 FROM koda/docker-tomcat
 
 # ==== add Knowledge ====
-ADD https://github.com/support-project/knowledge/releases/download/v1.5.0/knowledge.war \
+ADD https://github.com/support-project/knowledge/releases/download/v1.6.0pre1/knowledge.war \
       /tomcat/webapps/ROOT.war
 
 VOLUME [ "/root/.knowledge" ]

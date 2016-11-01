@@ -12,7 +12,7 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT \
   && chmod +x /usr/local/bin/dumb-init
 
 # ==== add Knowledge ====
-ADD https://github.com/support-project/knowledge/releases/download/v1.5.0/knowledge.war \
+ADD https://github.com/support-project/knowledge/releases/download/v1.6.0/knowledge.war \
       /usr/local/tomcat/webapps/ROOT.war
 
 VOLUME [ "/root/.knowledge" ]

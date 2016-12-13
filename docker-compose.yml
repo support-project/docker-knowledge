@@ -1,0 +1,22 @@
+version: '2'
+services:
+    app:
+        image: koda/docker-knowledge
+        #build: .
+        volumes:
+            - ./volumes/knowledge:/root/.knowledge
+        ports:
+            - "8080:8080"
+        restart: always
+        depends_on:
+            - "db"
+    db:
+        image: postgres:9
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=admin123
+            - POSTGRES_DB=knowledge_production
+        volumes:
+            #- ./volumes/initdb:/docker-entrypoint-initdb.d
+            - ./volumes/postgres:/var/lib/postgresql
+        restart: always

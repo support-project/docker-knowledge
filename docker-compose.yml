@@ -18,5 +18,5 @@ services:
             - POSTGRES_DB=knowledge_production
         volumes:
             #- ./volumes/initdb:/docker-entrypoint-initdb.d
-            - ./volumes/postgres:/var/lib/postgresql
+            - ./volumes/postgres/data:/var/lib/postgresql/data
         restart: always

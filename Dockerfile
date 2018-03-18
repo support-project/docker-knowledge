@@ -18,4 +18,4 @@ ADD https://github.com/support-project/knowledge/releases/download/v1.12.0/knowl
 VOLUME [ "/root/.knowledge" ]
 EXPOSE 8080
 
-CMD [ "/usr/local/bin/dumb-init", "/usr/local/tomcat/bin/catalina.sh", "run" ]
+CMD [ "dumb-init", "/usr/local/tomcat/bin/catalina.sh", "run" ]

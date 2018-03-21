@@ -3,13 +3,13 @@
 FROM tomcat:jre8
 
 # ==== dumb-init ====
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.0.0/dumb-init_1.0.0_amd64 \
-      /usr/local/bin/dumb-init
+RUN apt-get update && \
+    apt-get install -y dumb-init && \
+    apt-get clean
 
 # ==== environment ====
 RUN rm -rf /usr/local/tomcat/webapps/ROOT \
-  && update-ca-certificates -f \
-  && chmod +x /usr/local/bin/dumb-init
+  && update-ca-certificates -f
 
 # ==== add Knowledge ====
 ADD https://github.com/support-project/knowledge/releases/download/v1.12.0/knowledge.war \
@@ -18,4 +18,4 @@ ADD https://github.com/support-project/knowledge/releases/download/v1.12.0/knowl
 VOLUME [ "/root/.knowledge" ]
 EXPOSE 8080
 
-CMD [ "/usr/local/bin/dumb-init", "/usr/local/tomcat/bin/catalina.sh", "run" ]
+CMD [ "dumb-init", "/usr/local/tomcat/bin/catalina.sh", "run" ]

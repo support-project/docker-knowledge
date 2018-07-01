@@ -12,7 +12,7 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT \
   && update-ca-certificates -f
 
 # ==== add Knowledge ====
-ADD https://github.com/support-project/knowledge/releases/download/v1.12.0/knowledge.war \
+ADD https://github.com/support-project/knowledge/releases/download/v1.13.0/knowledge.war \
       /usr/local/tomcat/webapps/ROOT.war
 
 VOLUME [ "/root/.knowledge" ]

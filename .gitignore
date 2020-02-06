@@ -2,3 +2,4 @@ volumes/initdb
 volumes/postgres
 volumes/knowledge/*
 !volumes/knowledge/custom_connection.xml
+wiki.env

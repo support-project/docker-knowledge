@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
     app:
         image: koda/docker-knowledge
@@ -6,17 +6,45 @@ services:
         volumes:
             - ./volumes/knowledge:/root/.knowledge
         ports:
-            - "8080:8080"
+            - "9000:8080"
         restart: always
+        environment:
+            VIRTUAL_HOST: wiki.pastel-lilac.com # サイトのドメイン
+            VIRTUAL_PORT: 9000
+            LETSENCRYPT_HOST: wiki.pastel-lilac.com # サイトのドメイン
+            LETSENCRYPT_EMAIL: nakalab2011@gmail.com # 証明書を取得するためのアドレス
+            LETSENCRYPT_TEST: "false"
         depends_on:
             - "db"
     db:
         image: postgres:9
-        environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=admin123
-            - POSTGRES_DB=knowledge_production
+        env_file:
+            - wiki.env
         volumes:
-            #- ./volumes/initdb:/docker-entrypoint-initdb.d
             - ./volumes/postgres/data:/var/lib/postgresql/data
+        restart: always
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        container_name: nginx-proxy
+        privileged: true
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./docker-compose.d/certs:/etc/nginx/certs:ro
+            - ./docker-compose.d/htpasswd:/etc/nginx/htpasswd
+            - ./conf.d:/etc/nginx/conf.d
+            - /etc/nginx/vhost.d
+            - /usr/share/nginx/html
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+        restart: always
+    letsencrypt-nginx:
+        image: jrcs/letsencrypt-nginx-proxy-companion
+        container_name: letsencrypt-nginx
+        privileged: true
+        volumes:
+            - ./docker-compose.d/certs:/etc/nginx/certs:rw
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        volumes_from:
+            - nginx-proxy
         restart: always

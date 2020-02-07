@@ -3,3 +3,4 @@ volumes/postgres
 volumes/knowledge/*
 !volumes/knowledge/custom_connection.xml
 wiki.env
+job/cron/google-service.json

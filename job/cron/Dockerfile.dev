@@ -1,0 +1,6 @@
+FROM python:3.5.9-alpine3.11
+
+RUN apk --no-cache add curl
+RUN curl -# -o https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-279.0.0-linux-x86.tar.gz
+RUN ./google-cloud-sdk/install.sh
+RUN ./google-cloud-sdk/bin/gcloud init

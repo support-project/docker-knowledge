@@ -1,15 +1,37 @@
 version: '3'
 services:
-    app:
+    trafiek:
+        image: "traefik:v2.0.0-rc3"
+        container_name: "traefik"
+        command:
+            - "--log.level=DEBUG"
+            - "--api.insecure=true"
+            - "--providers.docker=true"
+            - "--providers.docker.exposedbydefault=false"
+            - "--entrypoints.web.address=:80"
+            - "--entrypoints.websecure.address=:443"
+            - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge=true"
+            - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge.entrypoint=web"
+            - "--certificatesresolvers.myhttpchallenge.acme.email=nakalab2011@gmail.com"
+            - "--certificatesresolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json" 
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - "./letsencrypt:/letsencrypt"
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    wiki:
         image: koda/docker-knowledge
-        #build: .
         volumes:
             - ./volumes/knowledge:/root/.knowledge
-        ports:
-            - "8080:8080"
         restart: always
         depends_on:
             - "db"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.wiki.rule=Host(`wiki.pastel-lilac.com`)"
+            - "traefik.http.routers.wiki.entrypoints=websecure"
+            - "traefik.http.routers.wiki.tls.certresolver=myhttpchallenge"
     db:
         image: postgres:9
         env_file:

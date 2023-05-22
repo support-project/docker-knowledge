@@ -1,4 +1,5 @@
-version: '2'
+version: '3'
+
 services:
     app:
         image: koda/docker-knowledge
@@ -9,7 +10,8 @@ services:
             - "8080:8080"
         restart: always
         depends_on:
-            - "db"
+            db:
+                condition: service_healthy
     db:
         image: postgres:9
         environment:
@@ -20,3 +22,9 @@ services:
             #- ./volumes/initdb:/docker-entrypoint-initdb.d
             - ./volumes/postgres/data:/var/lib/postgresql/data
         restart: always
+        healthcheck:
+            test: "psql -U postgres"
+            interval: 3s
+            timeout: 3s
+            retries: 100
+            start_period: 10s
